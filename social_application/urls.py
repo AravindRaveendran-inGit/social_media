@@ -24,7 +24,8 @@ from .views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
-    path('profiles/',include('Profile.urls',namespace='Profile'))
+    path('profiles/',include('Profile.urls',namespace='Profile')),
+    path('feeds/', include('post.urls', namespace='Post'))
 ]
 
 urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

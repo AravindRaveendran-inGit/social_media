@@ -1,4 +1,6 @@
-//
-//    $(document).ready(function(){
-//    alert("success js added")
-//    })
+
+    $(document).ready(function(){
+    $(".form-control").click(function(){
+        console.log('Success')
+    })
+    })

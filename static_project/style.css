@@ -1,13 +1,91 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body,
 .navbar {
-    margin-top: 0px background: #76b852;
-    background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-    background: -moz-linear-gradient(right, #76b852, #8DC26F);
-    background: -o-linear-gradient(right, #76b852, #8DC26F);
-    background: linear-gradient(to left, #76b852, #8DC26F);
-    font-family: "Roboto", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-image: linear-gradient(to left top, #6bd1bb, #6dd5b8, #70dab5, #75deb1, #7be2ac, #6ed1a0, #61c194, #54b188, #358a70, #1d6456, #13554d, #065e5b);
+    background-attachment:fixed;
 }
 
+.loginBtn{
+    
+    text-decoration: none;
+    color: #7cdfb4;
+    
+    font-weight: bold;
+    font-size: 25px;
+    
+
+        
+}
+.logoutbtn{
+    text-decoration: none;
+    color: #7cdfb4;
+}
+
+
+.logoutbtn:hover,.loginBtn:hover,.profile:hover{
+   
+    color: rgb(114, 116, 112)
+}
+.srchBar{
+    border: 2px solid;
+    border-radius: 122px;
+    border-style: none;
+    height: 45px;
+    width: 255px;
+    margin-left: 100px;
+    box-sizing: content-box;
+    outline:none;
+}
+input[type="search"]{
+    text-align: center;
+}
+input[type="search"]:hover{
+    box-shadow: 7px 5px 29px 3px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 7px 5px 29px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 5px 29px 3px rgba(0,0,0,0.75); 
+    animation:        
+}
+.btn{
+    font-weight: bold;
+    color:  #1f8558;
+    border-style: none;
+    background-color: #7cdfb4;
+    border-radius: 122px;
+    height: 45px;
+    width: 88px;
+    outline:none;
+}
+.input[type="button "]:hover{
+    box-shadow: 7px 5px 29px 3px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 7px 5px 29px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 5px 29px 3px rgba(0,0,0,0.75); 
+}
+.logoutbtn{
+    margin-left: 200px;
+    font-weight: bold;
+    font-size: 25px;
+    
+}
+.profile{
+    font-weight: bold;
+    font-size: 25px;
+    text-decoration: none;
+    color: #7cdfb4;
+    margin-left: 100px;
+    
+}
+
+.nav-link{
+    margin-left: 200px;
+    font-weight: bold;
+    font-size: 25px;
+}
+.myModal{
+    /* height: 300px !important; */
+    top:200px !important;
+    font-size: 25px !important;
+}
+.rounded-circle{
+        max-width: 200px;
+        height: 165px;
+}

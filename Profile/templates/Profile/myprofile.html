@@ -2,27 +2,94 @@
 
 {% block title %}
 my profile
-{%  endblock title %}
+{% endblock title %}
 
 {% block content %}
-<h1>My profile : {{profile}}</h1>
-<hr>
-<img src={{profile.profile_pic.url}}>
-<br>
-{{profile.first_name}}
-<br>
-{{profile.last_name}}
-<br>
-{{profile.bio}}
-<br>
-{{profile.get_friends_no}}
-<br>
-{{profile.slug}}
-<br>
-<ul>
-    {% for friend in profile.get_friends %}
-    <li>{{friend}}</li>
-    {% endfor %}
-</ul>
+<!-- Button trigger modal -->
 
-    {% endblock content %}
+<div class="card">
+  <div class="card-body">
+    {% if confirm%}
+    <div class="alert alert-success">
+      <strong>Successfully updated</strong>
+    </div>
+    {% endif %}
+    <h3>My profile:{{request.user}}</h3>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img class="rounded-circle z-depth-2" alt="" src="{{profile.profile_pic.url}}" data-holder-rendered="true">
+        </div>
+        <div class="col-md-auto">
+          <table class="table table-hover table-info">
+            <tbody>
+              <tr>
+                <td>Username:</td>
+                <td>{{profile.user}}</td>
+              </tr>
+              <tr>
+                <td>Bio:</td>
+                <td>{{profile.bio}}</td>
+              </tr>
+              <tr>
+                <td>Followers:</td>
+                <td>{{profile.get_friends_no}}</td>
+              </tr>
+             <tr>
+                <td>Total Posts:</td>
+                <td>{{profile.get_total_post}}</td>
+              </tr>
+              <tr>
+                <td>Liked Posts:</td>
+                <td>{{profile.total_likes}}</td>
+              </tr>
+              <tr>
+                <td>Likes Recevied:</td>
+                <td>{{profile.total_likes_recevied }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Update
+    </button>
+  </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content myModal">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Update your profile</h4>
+      </div>
+      <div class="container">
+        <img src="{{profile.profile_pic.url}}" class="img-circle" alt="Profile" width="304" height="236">
+      </div>
+      <div class="modal-body">
+        <div class="page-header">
+          <h5> Provied your Info.</h5>
+          <form class="profileFrm" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token%}
+            {{form.as_p}}
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  {% endblock content %}
