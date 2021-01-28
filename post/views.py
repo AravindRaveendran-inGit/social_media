@@ -44,7 +44,7 @@ def post_comment_create_and_list_view(request):
         'profile': profile,
         'p_form': p_form,
         'c_form': c_form,
-        'post_added':post_added,
+        'post_added': post_added,
     }
 
     return render(request, 'post/main.html', context)

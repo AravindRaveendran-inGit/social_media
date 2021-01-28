@@ -1,36 +1,38 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="#">How<b>&nbspd'you do...</b></a>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="profile nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
-      </li>
-     
-      <li class=" nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Friends
-        </a>
-        <div class=" dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+  <!-- Collection of nav links, forms, and other content for toggling -->
+  <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+    <div class="navbar-nav">
+      <a href="#" class="nav-item nav-link">Home</a>
+      <a href="#" class="nav-item nav-link">Profile</a>
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-item nav-link dropdown-toggle" data-toggle="dropdown">Followers</a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item"></a>
+          <a href="#" class="dropdown-item"></a>
+          <a href="#" class="dropdown-item"></a>
+          <a href="#" class="dropdown-item"></a>
         </div>
-      </li>
-      
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-    <ul class="navbar-nav mr-auto">
+      </div>
+      <div class="navbar-nav lg-auto">
+        <div class="navbar-form-wrapper">
+          <form class="navbar-form form-inline">
+            <div class="input-group search-box">
+              <input type="text" id="search" class="form-control" placeholder="Search Here...">
+              <div class="input-group-append">
+                <span class="input-group-text">
+                 <button type="submit" class="sub_btn" style="outline: none"><i class="material-icons fa fa-search">&#xE8B6;</i></button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <a href="#" class="nav-item nav-link  blog_link">Logout</a>
+    </div>
 
-    <li class="logoutbtn nav-item">
-      <a class="nav-link" href="#">Logout</a>
-    </li>
-  </ul>
   </div>
 </nav>
