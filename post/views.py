@@ -1,7 +1,10 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from Profile.models import Profile
 from post.models import Post, Like
 from .forms import PostModelForm, CommentModelForm
+from django.views.generic import UpdateView,DeleteView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -78,3 +81,18 @@ def like_unlike_post(request):
         like.save()
 
     return redirect('post:post-view')
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'posts/cofirm_del.html'
+    success_url = reverse_lazy('post:post-view')
+    success_ur='/posts/'
+
+    def get_object(self, *args, **kwargs):
+        pk=self.kwargs.get('pk')
+        obj = Post.objects.get(pk=pk)
+        if not obj.author.user == self.request.user:
+            messages.warning(self.request,"you can't delete this post")
+            return obj
+
+
