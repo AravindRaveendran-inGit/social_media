@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from Profile.models import Profile
 from post.models import Post, Like
 from .forms import PostModelForm, CommentModelForm
-from django.views.generic import UpdateView,DeleteView
+from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 
@@ -82,17 +82,30 @@ def like_unlike_post(request):
 
     return redirect('post:post-view')
 
+
 class PostDeleteView(DeleteView):
     model = Post
-    template_name = 'posts/cofirm_del.html'
+    template_name = 'post/cofirm_del.html'
     success_url = reverse_lazy('post:post-view')
-    success_ur='/posts/'
 
     def get_object(self, *args, **kwargs):
-        pk=self.kwargs.get('pk')
+        pk = self.kwargs.get('pk')
         obj = Post.objects.get(pk=pk)
         if not obj.author.user == self.request.user:
-            messages.warning(self.request,"you can't delete this post")
-            return obj
+            messages.warning(self.request, "you can't delete this post")
+        return obj
 
 
+class PostUpdateView(UpdateView):
+    form_class = PostModelForm
+    model = Post
+    template_name = 'post/update.html'
+    success_url = reverse_lazy('post:post-view')
+
+    def form_valid(self, form):
+        profile = Profile.objects.get(user=self.request.user)
+        if form.instance.author == profile:
+            return super().form_valid(form)
+        else:
+            form.add_error(None, "you are not authorized to change the post")
+            return super().form_invalid(form)
