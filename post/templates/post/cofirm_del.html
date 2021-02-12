@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block title %}
+delete post
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% if messages %}
+
+    {% for message in messages %}
+
+    {% if 'warning' in message.tags %}
+    <div class="container">
+        <div class="container">
+            {{message}}
+        </div>
+    </div>
+    
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {% if not messages %}
+    <div class="container">
+        <h3>Delete Post?</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p>Are you Sure want to delete{{object}}?</p>
+            <button class="btn btn-primary" type="submit">Delete</button>
+        </form>
+    </div>
+    {% endif %}
+
+
+</div>
+{% endblock content %}

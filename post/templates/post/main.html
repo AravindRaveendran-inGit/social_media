@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% block title %}
+posts
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-8">
+      {% for obj in pst %}
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="">
+              {% ifequal request.user obj.author.user %}
+              <a href="{% url 'post:post-update' obj.pk %}"><button type="button" class="btn btn-light">Update</button></a>
+              <a href="{% url 'post:post-delete' obj.pk %}"><button type="button" class="btn btn-light">Delete</button></a>
+              {% endifequal %}
+            </div>
+
+          </div>
+          <img src={{obj.author.profile_pic.url}} class="img-rounded rounded" alt="">
+         <b> {{obj.author.user}}</b> <small> {{obj.created|timesince}}ago</small>
+          <div class="container">
+            {% if obj.image %}
+            <img src={{obj.img.url}}>
+            {% endif %}
+          </div>
+          <h5 class="card-title">{{obj.content}}</h5>
+          <div class="container">
+            <form action="{% url 'post:post-liked' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="post_id" value={{obj.id}}>
+              <button type="submit" class="btn btn-primary">
+                {% if profile not in obj.liked.all %}
+                <i class="far fa-thumbs-up">&nbsp;Like</i>
+                {% else %}
+                <i class="far fa-thumbs-down">&nbsp;Unlike</i>
+                {% endif %}
+              </button>
+              &nbsp;{{obj.total_likes}}
+            </form>
+            <hr>
+          </div>
+          <button class="cmt_btn btn-primary"><i class="fas fa-comment"></i>&nbspComments</button>
+
+          <div class="comment-box">
+            {% if obj.comment_set.all %}
+            {% for c in obj.comment_set.all %}
+            <p>{{c.body}}</p>
+            {% endfor %}
+            {% endif %}
+          </div>
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{c_form}}
+            <input type="hidden" name="post_id" value="{{obj.id}}">
+            <button type="submit" class="btn btn-primary" name="submit_c_form">Comment</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-6 col-md-4">
+      {% if post_added %}
+      <div class="alert alert-success">
+        <strong>Posted</strong>
+        {% endif %}
+      </div>
+      <form action="" method="POST" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{p_form}}
+        <button type="submit" class="btn btn-primary" name="submit_p_form">Send Post</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+{% block scripts%}
+<script>
+let display=false
+  $(document).ready(function(){
+      $(".cmt_btn").click(function(){
+          if (display==false){
+              $(this).next(".comment-box").hide("slow");
+              display=true
+          } else {
+                $(this).next(".comment-box").show("slow");
+                display=false
+          }
+      });
+  });
+</script>
+{% endblock scripts%}
+
