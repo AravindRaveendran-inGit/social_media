@@ -1,22 +1,9 @@
-# from django.db import models
-# from django.db.models.signals import post_save
+#
 # from django.contrib.auth.models import User
+# from .models import Profile, Relationship
+# from django.db.models.signals import post_save
 # from django.dispatch import receiver
-# from .models import Profile
 #
-#
-# class Profile(models.Model):
-#     first_name = models.CharField(max_length=25,blank=True)
-#     last_name = models.CharField(max_length=25,blank=True)
-#     user = models.OneToOneField(User,on_delete=models.CASCADE)
-#     email = models.EmailField(blank=True)
-#     bio = models.TextField(default="no bio...",max_length=250)
-#     country = models.CharField(max_length=25,blank=True)
-#     profile_pic = models.ImageField(default='avatar.png',upload_to='avatar/')
-#     friends = models.ManyToManyField(User,blank=True,related_name='friends')
-#     slug = models.SlugField(unique=True,blank=True)
-#     updated = models.DateTimeField(auto_now=True)
-#     created = models.DateTimeField(auto_now_add=True)
 #
 # @receiver(post_save, sender=User)
 # def post_create_profile(sender, instance, created, **kwargs):
@@ -30,3 +17,13 @@
 #     print('sender', sender)
 #     print('instance', instance)
 #     instance.profile.save()
+#
+# @receiver(post_save, sender=Relationship)
+# def post_save_add_to_friendlist(sender, instance, created, **kwargs):
+#     sender_ = instance.sender
+#     receiver_ = instance.receiver
+#     if instance.status == 'accepted':
+#         sender_.friends.add(receiver_.user)
+#         receiver_.friends.add(sender_.user)
+#         sender_.save()
+#         receiver_.save()

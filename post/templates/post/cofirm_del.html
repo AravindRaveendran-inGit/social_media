@@ -22,10 +22,10 @@ delete post
 
     {% if not messages %}
     <div class="container">
-        <h3>Delete Post?</h3>
+        <h3>Delete Post!</h3>
         <form action="" method="POST">
             {% csrf_token %}
-            <p>Are you Sure want to delete{{object}}?</p>
+            <p>Are you Sure want to delete {{object}} from your wall?</p>
             <button class="btn btn-primary" type="submit">Delete</button>
         </form>
     </div>
