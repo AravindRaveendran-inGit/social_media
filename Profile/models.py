@@ -6,17 +6,18 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Q
 
+# class view of profiles to be invited/ users who are not in friends list
 class ProfileManager(models.Manager):
     def get_all_profiles_to_invite(self,sender):
         profiles = Profile.objects.all().exclude(user = sender)
         profile = Profile.objects.get(user=sender)
         qs = Relationship.objects.filter(Q(sender=profile)|Q(receiver=profile))
 
-        accepted = []
+        accepted = set([])
         for rel in qs:
             if rel.status == "accepted":
-                accepted.append(rel.receiver)
-                accepted.append(rel.sender)
+                accepted.add(rel.receiver)
+                accepted.add(rel.sender)
 
             print(accepted)
             available = [profile for profile in profiles if profile not in accepted]

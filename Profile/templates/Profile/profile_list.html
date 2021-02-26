@@ -4,9 +4,37 @@ all-profiles
 {% endblock title %}
 
 {% block content %}
-<ul>
-    {% for item in qs %}
-    <li>{{ item }}</li>
+
+{% if is_empty %}
+<h2>No List to show</h2>
+{% endif %}
+
+    {% for obj in object_list %}
+    <div class="container mt-5 d-flex justify-content-center">
+    <div class="card p-3">
+        <div class="d-flex align-items-center">
+            <div class="image"> <img src={{ obj.profile_pic.url }} class="rounded" width="155"> </div>
+            <div class="ml-3 w-100">
+                <h4 class="mb-0 mt-0">{{ obj.user }}</h4> <span>{{obj.bio}}</span>
+<!--                <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">-->
+<!--                    <div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>-->
+<!--                    <div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>-->
+<!--                    <div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>-->
+<!--                </div>-->
+                <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-outline-primary w-100">See Profile</button> </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                </form>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     {% endfor %}
-</ul>
+
 {% endblock content %}
