@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.db.models import Q
+from django.shortcuts import render, redirect
 from .models import Profile, Relationship
 from .forms import profileForm
 from django.views.generic import ListView
@@ -78,7 +79,29 @@ class ProfileListView(ListView):
             context["is_empty"] = True
         return context
 
+def send_invitation(request):
+    if request.method=="POST":
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = Profile.objects.get(user=user)
+        receiver= Profile.objects.get(pk=pk)
 
+        rel = Relationship.objects.create(sender=sender, receiver=receiver,status='send')
+
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('Profile:my-profile')
+
+def remove_from_friends(request):
+    if request.method=="POST":
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = Profile.objects.get(user=user)
+        receiver = Profile.objects.get(pk=pk)
+
+        rel = Relationship.objects.get((Q(sender=sender) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=sender)))
+        rel.delete()
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('Profile:my-profile')
 
 
 
