@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+my profile
+{% endblock title %}
+
+{% block content %}
+<!-- Button trigger modal -->
+
+    <div class="container">
+        <div class="main-body">
+
+            <!-- Breadcrumb -->
+
+            <!-- /Breadcrumb -->
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="{{profile.profile_pic.url}}" alt="Admin"
+                                    class="rounded-circle" width="150"><br/>
+                                  {% if object.user not in rel_receiver and object.user not in rel_sender %}
+                                    <form action="{% url 'Profile:send-invite' %}" method="POST">
+                                        {% csrf_token %}
+                                    <input type="hidden" name="profile_pk" value={{object.pk}}>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary w-100">Follow</button>
+                                    </form>
+                                     {% endif %}
+                                {% if object.user in rel_receiver and request.user not in  object.friends.all %}
+                                <button type="submit" class="btn btn-secondary disabled w-100">Not Confirmed</button>
+                                {% endif %}
+
+                                {% if request.user in object.friends.all %}
+                                <form action="{% url 'Profile:remove-friend'%}" method="POST">
+                                    {% csrf_token %}
+                             <input type="hidden" name="profile_pk" value={{object.pk}}>
+                             <button type="submit" class="btn btn-sm btn-outline-primary w-100">Unfollow</button>
+                                </form>
+                                {% endif %}
+                                <div class="mt-3">
+                                    <h4>{{ object.user }}</h4>
+                                  <p class="text-secondary mb-1"><b>{{ object.email }}</b></p>
+                                    <p class="text-muted font-size-sm"><b>{{ object.bio }}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h6 class="mb-0">Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <b>{{ object.first_name }}&nbsp{{object.last_name}}</b>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Bio</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  <b>  {{ object.bio }}</b>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Followers</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                 <b>   {{ object.get_friends_no }}</b>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Total Posts</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                  <b>  {{ object.get_total_post }}</b>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Liked Posts</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                   <b> {{ object.total_likes }}</b>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row gutters-sm">
+                        {% if len_posts %}
+                            {% for post in posts %}
+                             <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            {{post.content}}
+                            </div>
+                        {{post.video}}<br/>
+                        {{post.image}}
+                            </div>
+                             </div>
+                        {% endfor %}
+                        {% else %}
+                        <h3>Nothing Posted Yet</h3>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div tabindex="-1" class="modal pmd-modal fade" id="form-dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header pmd-modal-border">
+                    <b><p style="text-align:left font-size:25px ;">{{ object.first_name }}&nbsp{{ object.last_name }}</p></b>
+                     <img src="{{object.profile_pic.url}}" alt="Admin" class="rounded-circle" width="140">
+<!--                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button"><i class="material-icons fa fa-search">&#xE8B6;</i></button>-->
+                </div>
+
+        </div>
+    </div>
+
+  {% endblock content %}
