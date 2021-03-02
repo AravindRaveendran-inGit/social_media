@@ -4,6 +4,13 @@ posts
 {% endblock title %}
 
 {% block content %}
+<div class="container" style="float: left;">
+<form action="" method="POST" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+      <table><tr>{{p_form}}</tr>
+<td><button type="submit" class="btn btn-primary" name="submit_p_form">Send Post</button></td></table>
+      </form>
+  </div>
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-8">
@@ -28,25 +35,27 @@ posts
           </div>
           <h5 class="card-title">{{obj.content}}</h5>
           <div class="container">
-            <form action="{% url 'post:post-liked' %}" method="POST">
+            <form action="{% url 'post:post-liked' %}" method="POST" class="like-form" id="{{obj.id}}">
               {% csrf_token %}
               <input type="hidden" name="post_id" value={{obj.id}}>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary like-btn{{obj.id}}">
                 {% if profile not in obj.liked.all %}
                 <i class="far fa-thumbs-up">&nbsp;Like</i>
                 {% else %}
                 <i class="far fa-thumbs-down">&nbsp;Unlike</i>
                 {% endif %}
               </button>
-              &nbsp;{{obj.total_likes}}
+             <div class="like-count{{obj.id}}"> &nbsp;{{obj.total_likes}} likes</div>
             </form>
             <hr>
           </div>
           <button class="cmt_btn btn-primary"><i class="fas fa-comment"></i>&nbspComments</button>
 
+
           <div class="comment-box">
             {% if obj.comment_set.all %}
             {% for c in obj.comment_set.all %}
+              <br/> <img src={{c.user.profile_pic.url}} class="img-rounded rounded" alt="">&nbsp<span>{{c.user.first_name}}&nbsp{{c.user.last_name}}</span>
             <p>{{c.body}}</p>
             {% endfor %}
             {% endif %}
@@ -67,11 +76,7 @@ posts
         <strong>Posted</strong>
         {% endif %}
       </div>
-      <form action="" method="POST" class="form-group" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{p_form}}
-        <button type="submit" class="btn btn-primary" name="submit_p_form">Send Post</button>
-      </form>
+
     </div>
   </div>
 </div>
@@ -91,6 +96,45 @@ let display=false
                 display=false
           }
       });
+      $('.like-form').submit(function(e){
+        e.preventDefault()
+
+        const post_id = $(this).attr('id')
+
+        const likeText = $(`.like-btn${post_id}`).text()
+        const trim = $.trim(likeText)
+
+        const url = $(this).attr('action')
+
+
+        let res;
+        const likes = $(`.like-count${post_id}`).text()
+        const trimCount = parseInt(likes)
+
+        $.ajax({
+            type: 'POST',
+            url:url,
+            data: {
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                'post_id':post_id
+            },
+            success: function(response){
+                if(trim === 'Unlike'){
+                    $(`.like-btn${post_id}`).text('Like')
+                    res = trimCount - 1
+                }else{
+                    $(`.like-btn${post_id}`).text('Unlike')
+                    res = trimCount + 1
+                }$(`.like-count${post_id}`).text(res,'likes')
+
+            },
+            error: function(response){
+            console.log('error',response)
+            }
+
+
+        });
+        });
   });
 </script>
 {% endblock scripts%}
