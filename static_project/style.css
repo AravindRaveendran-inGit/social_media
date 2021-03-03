@@ -294,3 +294,8 @@
 .w-100{
     width: 55% !important;
 }
+
+.clearfix{
+    float:none !important;
+    clear:both !important;
+}
