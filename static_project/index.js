@@ -3,5 +3,5 @@
     $(".form-control").click(function(){
         console.log('Success')
     })
-    $('.nav-item').dropdown()
-    })
+//    $('.nav-item').dropdown()
+//    })
