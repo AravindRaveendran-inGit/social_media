@@ -22,7 +22,7 @@ my-invites
 <!--                    <div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>-->
 <!--                </div>-->
 
-                <div class="button mt-2 d-flex flex-row align-items-center"> <a href=""><button class="btn btn-sm btn-outline-primary w-100">See Profile</button></a></div>
+                <div class="button mt-2 d-flex flex-row align-items-center"> <a href="{{obj.get_absolute_urls}}"><button class="btn btn-sm btn-outline-primary w-100">See Profile</button></a></div>
                 <form action="{% url 'Profile:accept-request' %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="profile_pk" value={{obj.pk}}>

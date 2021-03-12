@@ -21,6 +21,7 @@
       {% if request.user.is_authenticated %}
       <a class="{% if request.path == path_to_post %}active{% endif %} nav-item nav-link" href="{{path_to_post}}">Home</a>
       {% endif %}
+      {% if request.user.is_authenticated %}
       <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} nav-item nav-link">Profile</a>
       <div class="nav-item dropdown">
         <a href="#" class="nav-item nav-link dropdown-toggle" data-toggle="dropdown">Followers</a>
@@ -47,7 +48,11 @@
         <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} nav-item nav-link"><img src={{picture.url}} class="profileImg">&nbsp;{{request.user}}</a>
 
       </div>
-      <a href="#" class="nav-item nav-link  blog_link">Logout</a>
+      <a href="{% url 'account_logout'%}" class="nav-item nav-link  blog_link">Logout</a>
+      {% else %}
+        <a href="{% url 'account_login'%}" class="nav-item nav-link  blog_link">Login</a>
+
+      {% endif %}
     </div>
 
   </div>
