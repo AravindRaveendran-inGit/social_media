@@ -11,7 +11,9 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light">
+{% if request.user.is_authenticated %}
   <a class="{% if request.path == path_to_home %}active{% endif %} navbar-brand" href="{{path_to_home}}">How<b>&nbspd'you do...</b></a>
+{% endif %}
 <!--  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">-->
 <!--    <span class="navbar-toggler-icon"></span>-->
 <!--  </button>-->
@@ -50,7 +52,7 @@
       </div>
       <a href="{% url 'account_logout'%}" class="nav-item nav-link  blog_link">Logout</a>
       {% else %}
-        <a href="{% url 'account_login'%}" class="nav-item nav-link  blog_link">Login</a>
+        <a href="{% url 'account_login'%}" class="nav-item nav-link  blog_link login">Login</a>
 
       {% endif %}
     </div>
