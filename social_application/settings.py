@@ -63,7 +63,7 @@ if DEBUG:
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = '587'
 # EMAIL_HOST_USER = '****'
-# EMAIL_HOST_PASSWORD = '***'
+# EMAIL_HOST_PASSWORD = '****'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
